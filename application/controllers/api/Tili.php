@@ -30,6 +30,16 @@ class Tili extends REST_Controller {
         $this->load->model('Tili_model');
     }
 
+    public function Saldo_get() // tässä voi käyttää aiempaa funktiota 
+    {
+        $this->load->model('Pankkikortti_model');
+        $kortinNumero=$this->input->get('kortinID');
+        $tilinumero=$this->Pankkikortti_model->get_Tilinumero($kortinNumero);// kutsutaan modelin funktiota
+        $this->load->model('Tili_model'); // this input get request on pyyntö ja sisältää dataa this input get hakee requestista arvon joka on avaimella muista niin ei kulu aikaa
+        $Saldo=$this->Tili_model->get_Saldo($tilinumero);  //asetetaan $Saldo tilin saldo
+        
+        echo json_encode($Saldo);
+    }
     public function index_get()
     {
         // tili from a data store e.g. database  

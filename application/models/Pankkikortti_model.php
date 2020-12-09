@@ -4,6 +4,21 @@
  */
 class Pankkikortti_model extends CI_model
 {
+  
+  function get_Tunnusluku($KortinID)
+  {
+    $this->db->select('Tunnusluku');
+    $this->db->from('Pankkikortti');
+    $this->db->where('KortinID',$KortinID);
+    return $this->db->get()->row('Tunnusluku');
+  }
+  function get_Tilinumero($KortinID)
+  {
+    $this->db->select('Tili');
+    $this->db->from('Pankkikortti');
+    $this->db->where('KortinID',$KortinID);
+    return $this->db->get()->row('Tili');
+  }
   function get_pankkikortti($id){
     $this->db->select('*');
     $this->db->from('Pankkikortti');

@@ -29,6 +29,7 @@ class Pankkikortti extends REST_Controller {
 
         $this->load->model('Pankkikortti_model');
     }
+   
 
     public function index_get()
     {

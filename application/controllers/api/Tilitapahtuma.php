@@ -29,6 +29,36 @@ class Tilitapahtuma extends REST_Controller {
 
         $this->load->model('Tilitapahtuma_model');
     }
+    public function tietynTilintapahtuma_get()
+    {
+        $this->load->model('Pankkikortti_model'); //ladataan pankkikortti model
+        $KortinID=$this->input->get('KortinID');  
+        $TilinumeroID=$this->Pankkikortti_model->get_Tilinumero($KortinID); //kutsutaan funktiota jotta saadaan pankkikortin tiedot
+        $this->load->model('Tilitapahtuma_model'); //ladataan tilitapahtuma model
+        $tapahtumat=$this->Tilitapahtuma_model->tietynTilintapahtuma($TilinumeroID);
+
+        
+        echo json_encode($tapahtumat);
+    }
+    public function nostaRahaa_post()  //toimii jos laitetaan tiedot menemään urlissa pitää muokkailla siten että tili ei voi mennä miinukselle Saldo>= nostettava raha
+    {   
+        $this->load->model('Pankkikortti_model');
+        $kortinNumero=$this->input->get('kortinID');
+        $tilinumero=$this->Pankkikortti_model->get_Tilinumero($kortinNumero);// kutsutaan modelin funktiota
+        $this->load->model('Tili_model'); // this input get request on pyyntö ja sisältää dataa this input get hakee requestista arvon joka on avaimella muista niin ei kulu aikaa
+        $Saldo=$this->Tili_model->get_Saldo($tilinumero);  //asetetaan $Saldo tilin saldo
+        $this->load->model('Tilitapahtuma_model');
+        $amount=$this->input->get('Saldo');
+        if($Saldo>=$amount){          //jos tilillä on tarpeeksi rahaa suoritetaan nosto muuten annetaan false
+            $result=$this->Tilitapahtuma_model->nostaRahaa($tilinumero, $amount);
+            $result=true;
+        }
+        else{
+            $result=false;
+        }
+        
+        echo json_encode($result);
+    }
 
     public function index_get()
     {

@@ -4,6 +4,34 @@
  */
 class Tilitapahtuma_model extends CI_model
 {
+  function nostaRahaa($first_id, $amount){
+    $call_procedure="Call Otto(?,?)";
+    $data=array('TilinumeroID'=>$first_id,'Saldo'=>$amount);
+    $this->db->query($call_procedure, $data);
+    
+    return $this->db->affected_rows();
+
+  }
+  /*function raise($id, $amount){​​
+    $raise_call = "CALL Otto(?, ?)";
+    $data = array('id' => $id, 'amount' => $amount);
+    $this->db->query($raise_call, $data);
+    $result=$this->db->affected_rows();
+    if ($result !== 0) {​​
+      return TRUE;
+    }​​
+    else {​​
+      return FALSE;
+    }​​
+}​​*/
+
+function tietynTilintapahtuma($Tapahtumatili){
+  $this->db->select('Tapahtumatyyppi, SaldonMuutos'); //muuta tämä oikeaan tietokantaan alkamaan isolla SaldonMuutos tai Saldonmuutos lokaaliin
+  $this->db->from('Tilitapahtuma');
+  $this->db->where('Tapahtuma_tili',$Tapahtumatili);
+  
+  return $this->db->get()->result_array('Tapahtuma_tili');
+}
   function get_tilitapahtuma($id){
     $this->db->select('*');
     $this->db->from('Tilitapahtuma');
