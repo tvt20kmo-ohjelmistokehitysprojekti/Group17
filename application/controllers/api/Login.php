@@ -1,19 +1,21 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
-class Login extends CI_Controller {
-    public function check_login(){
-        $this->load->model('User_model');
-        $username=$this->input->get('username');
-        $plaintext_password=$this->input->get('password');
-        $encrypted_password=$this->User_model->check_login($username);
-
-        if(password_verify($plaintext_password,$encrypted_password)){
-          $result=true;
-        }
-        else{
-          $result=false;
-        }
-        echo json_encode($result);
-    }
+require APPPATH . 'libraries/REST_Controller.php';
+class Login extends REST_Controller {
+  public function index_get()  // kutsussa pelkkä login
+  {
+    $this->load->model('Pankkikortti_model');
+      $KortinID = $this->input->get('KortinID');
+      $Tunnusluku = $this->input->get('Tunnusluku');
+      $oikeatunnusluku=$this->Pankkikortti_model->get_Tunnusluku($KortinID);
+      if($oikeatunnusluku == $Tunnusluku)
+      {
+          $result = true;
+      }
+      else
+      {
+          $result = false;
+      }
+      echo json_encode($result);
+  }
 }

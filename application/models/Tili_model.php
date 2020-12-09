@@ -4,6 +4,13 @@
  */
 class Tili_model extends CI_model
 {
+  function get_Saldo($TilinumeroID)
+  {
+    $this->db->select('Saldo');
+    $this->db->from('Tili');
+    $this->db->where('TilinumeroID',$TilinumeroID);
+    return $this->db->get()->row('Saldo');
+  }
   function get_tili($id){
     $this->db->select('*');
     $this->db->from('Tili');
