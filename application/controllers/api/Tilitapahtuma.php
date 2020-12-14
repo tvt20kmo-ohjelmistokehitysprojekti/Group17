@@ -40,7 +40,7 @@ class Tilitapahtuma extends REST_Controller {
         
         echo json_encode($tapahtumat);
     }
-    public function nostaRahaa_post()  //toimii jos laitetaan tiedot menemään urlissa pitää muokkailla siten että tili ei voi mennä miinukselle Saldo>= nostettava raha
+    public function nostaRahaa_get()  //toimii jos laitetaan tiedot menemään urlissa pitää muokkailla siten että tili ei voi mennä miinukselle Saldo>= nostettava raha
     {   
         $this->load->model('Pankkikortti_model');
         $kortinNumero=$this->input->get('kortinID');
