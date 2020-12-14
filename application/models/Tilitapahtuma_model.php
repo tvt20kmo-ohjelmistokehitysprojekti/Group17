@@ -26,7 +26,7 @@ class Tilitapahtuma_model extends CI_model
 }​​*/
 
 function tietynTilintapahtuma($Tapahtumatili){
-  $this->db->select('Tapahtumatyyppi, SaldonMuutos'); //muuta tämä oikeaan tietokantaan alkamaan isolla SaldonMuutos tai Saldonmuutos lokaaliin
+  $this->db->select('Tapahtumatyyppi, Saldonmuutos'); //muuta tämä oikeaan tietokantaan alkamaan isolla SaldonMuutos tai Saldonmuutos lokaaliin
   $this->db->from('Tilitapahtuma');
   $this->db->where('Tapahtuma_tili',$Tapahtumatili);
   
